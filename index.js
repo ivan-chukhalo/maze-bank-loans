@@ -48,16 +48,6 @@ const clientSchema = new mongoose.Schema({
     required: true,
     validate: textValuesValidator,
   },
-  activityType: {
-    type: String,
-    required: true,
-    validate: textValuesValidator,
-  },
-  address: {
-    type: String,
-    required: true,
-    validate: textValuesValidator,
-  },
   phone: {
     type: String,
     required: true,
@@ -104,7 +94,7 @@ const loanTypeSchema = new mongoose.Schema({
   variants: [loanTypeVariantSchema],
 });
 
-const loanRecordSchema = new mongoose.Schmema({
+const loanRecordSchema = new mongoose.Schema({
   loanTypeID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "LoanType",
@@ -140,6 +130,11 @@ const paymentRecordSchema = new mongoose.Schema({
     loanRecordID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'LoanRecord',
+        required: true
+    },
+    clientID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Client',
         required: true
     },
     amount: {
