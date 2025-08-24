@@ -28,32 +28,6 @@ const creationDateValidator = {
   message: (props) => `Creation date can not be in the future`,
 };
 
-const loanNameValidator = {
-  validator: function (value) {
-    if (value !== "Dlia Kuma" || value !== "Ne Dlia Kuma") return false;
-    if (this.rate === 1 && value === "Dlia Kuma") return true;
-    if (this.rate === 10 && value === "Ne Dlia Kuma") return true;
-    return false;
-  },
-  message: (props) =>
-    `There are only two loan types allowed: "Dlia Kuma" and "Ne Dlia Kuma". You provided invalid value: ${props.value}`,
-};
-
-const termValidator = {
-  validator: function (value) {
-    return Number.isInteger(value) && value >= 12 && value <= 120;
-  },
-  message: (props) => `Term must be an integer between 12 and 120 months`,
-};
-
-const loanRateValidator = {
-  validator: function (value) {
-    return value === 1 || value === 10; // 1% for
-  },
-  message: (props) =>
-    `There are only two loan rates allowed depending on loan type: 1% for "Dlia Kuma" and 10% for "Ne Dliz Kuma". You provided invalid value: ${props.value}`,
-};
-
 const clientSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -78,9 +52,29 @@ const clientSchema = new mongoose.Schema({
   },
 });
 
+const LOAN_NAMES_RATES = {
+  "Dlia Kuma": 1,
+  "Ne Dlia Kuma": 10,
+}
+
+const loanNameValidator = {
+  validator: function (value) {
+    return Object.keys(LOAN_NAMES_RATES).includes(value);
+  },
+  message: (props) =>
+    `Loan name ${props.value} is not recognized. Allowsed names are: ${Object.keys(LOAN_NAMES_RATES).join(", ")}`,
+};
+
+const termValidator = {
+  validator: function (value) {
+    return Number.isInteger(value) && value >= 12 && value <= 120;
+  },
+  message: (props) => `Term must be an integer between 12 and 120 months`,
+};
+
 const loanTypeSchema = new mongoose.Schema({
   name: { type: String, required: true, validate: loanNameValidator },
-  rate: { type: Number, required: true, validate: loanRateValidator },
+  rate: { type: Number, required: true, set: (value) => LOAN_NAMES_RATES[value] }, // in percent, set automatically base on the name
   term: {
     type: Number,
     required: true,
