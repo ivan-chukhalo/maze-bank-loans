@@ -28,18 +28,30 @@ const creationDateValidator = {
   message: (props) => `Creation date can not be in the future`,
 };
 
+const loanNameValidator = {
+  validator: function (value) {
+    if (value !== "Dlia Kuma" || value !== "Ne Dlia Kuma") return false;
+    if (this.rate === 1 && value === "Dlia Kuma") return true;
+    if (this.rate === 10 && value === "Ne Dlia Kuma") return true;
+    return false;
+  },
+  message: (props) =>
+    `There are only two loan types allowed: "Dlia Kuma" and "Ne Dlia Kuma". You provided invalid value: ${props.value}`,
+};
+
 const termValidator = {
   validator: function (value) {
     return Number.isInteger(value) && value >= 12 && value <= 120;
   },
+  message: (props) => `Term must be an integer between 12 and 120 months`,
 };
 
-const loanNameValidator = {
+const loanRateValidator = {
   validator: function (value) {
-    return value === "Dlia Kuma" || value === "Ne Dlia Kuma";
+    return value === 1 || value === 10; // 1% for
   },
   message: (props) =>
-    `There is no such loan ${props.value}. Only "Dlia Kuma" and "Ne Dlia Kuma" are allowed.`,
+    `There are only two loan rates allowed depending on loan type: 1% for "Dlia Kuma" and 10% for "Ne Dliz Kuma". You provided invalid value: ${props.value}`,
 };
 
 const clientSchema = new mongoose.Schema({
@@ -66,17 +78,9 @@ const clientSchema = new mongoose.Schema({
   },
 });
 
-const loanTypeVariantSchema = new mongoose.Schema({
-  name: { type: String, required: true, validate: loanNameValidator },
-  rate: { type: Number, required: true },
-});
-
-loanTypeVariantSchema.path("rate").set(function (value) {
-  if (this.name === "Dlia Kuma") return 1;
-  if (this.name === "Ne Dlia Kuma") return 10;
-});
-
 const loanTypeSchema = new mongoose.Schema({
+  name: { type: String, required: true, validate: loanNameValidator },
+  rate: { type: Number, required: true, validate: loanRateValidator },
   term: {
     type: Number,
     required: true,
@@ -91,7 +95,6 @@ const loanTypeSchema = new mongoose.Schema({
     max: 100,
     default: 10,
   }, // in percent
-  variants: [loanTypeVariantSchema],
 });
 
 const loanRecordSchema = new mongoose.Schema({
@@ -127,26 +130,26 @@ const loanRecordSchema = new mongoose.Schema({
 });
 
 const paymentRecordSchema = new mongoose.Schema({
-    loanRecordID: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'LoanRecord',
-        required: true
-    },
-    clientID: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Client',
-        required: true
-    },
-    amount: {
-        type: Number,
-        required: true,
-        min: 1,
-        default: 1,
-    },
-    paymentDate: {
-        type: Date,
-        required: true,
-        default: Date.now,
-        validate: creationDateValidator,
-    }
-})
+  loanRecordID: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "LoanRecord",
+    required: true,
+  },
+  clientID: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Client",
+    required: true,
+  },
+  amount: {
+    type: Number,
+    required: true,
+    min: 1,
+    default: 1,
+  },
+  paymentDate: {
+    type: Date,
+    required: true,
+    default: Date.now,
+    validate: creationDateValidator,
+  },
+});
