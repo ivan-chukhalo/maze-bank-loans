@@ -1,13 +1,13 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import connectDB from './src/config/db.js';
 
 const app = express();
 dotenv.config(); // Load environment variables from .env
 const PORT = process.env.PORT || 3000;
 
-// connect to MongoDB
-mongoose.connect(process.env.MONGO_URI);
+connectDB();
 
 const allowedTextCharsRegex = /^[a-zA-Z\u0400-\u04FF\s-]+$/; // Latin and Cyrillic letters, spaces, and hyphens only, no digits or special characters, more than 1 character
 const forbiddenTextCharsRegex = /[!@#$%^&*(),.?":{}|<>0-9ёЁыЫэЭъЪ]/; // Exclude digits and specific special characters and ё, Ё, ы, Ы, э, Э, ъ, Ъ
@@ -74,7 +74,7 @@ const termValidator = {
 
 const loanTypeSchema = new mongoose.Schema({
   name: { type: String, required: true, validate: loanNameValidator },
-  rate: { type: Number, required: true, set: (value) => LOAN_NAMES_RATES[value] }, // in percent, set automatically base on the name
+  rate: { type: Number, required: true, set: (value) => LOAN_NAMES_RATES[value] }, // in percent, set automatically base on the name. But probably virtual would be better. Fix later
   term: {
     type: Number,
     required: true,
