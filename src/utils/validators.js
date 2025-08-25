@@ -46,4 +46,5 @@ export {
   creationDateValidator,
   termValidator,
   loanNameValidator,
+  allowedPhoneValueRegex,
 };

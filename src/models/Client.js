@@ -1,4 +1,9 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
+import {
+  textValuesValidator,
+  creationDateValidator,
+  allowedPhoneValueRegex,
+} from "../utils/validators.js";
 
 const clientSchema = new mongoose.Schema({
   name: {
@@ -24,6 +29,6 @@ const clientSchema = new mongoose.Schema({
   },
 });
 
-const Client = mongoose.model('Client', clientSchema);
+const Client = mongoose.model("Client", clientSchema);
 
 export default Client;
