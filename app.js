@@ -113,16 +113,32 @@ const seedDB = async () => {
     ]);
 
     // Adding PaymentRecords (loanTypes identifiers, clientID identifiers, then inserting records)
-    const loanDliaKumaID = await LoanType.findOne({ name: "Dlia Kuma" })._id;
-    const loanNeDliaKumaID = await LoanType.findOne({ name: "Ne Dlia Kuma" })._id;
+    const loanDliaKumaDoc = await LoanType.findOne({ name: "Dlia Kuma" });
+    if (!loanDliaKumaDoc) throw new Error("Loan Dlia Kuma not found");
+    const loanDliaKumaID = loanDliaKumaDoc._id;
 
+    const loanNeDliaKumaDoc = await LoanType.findOne({ name: "Ne Dlia Kuma" });
+    if (!loanNeDliaKumaDoc) throw new Error("Loan Ne Dlia Kuma not found");
+    const loanNeDliaKumaID = loanNeDliaKumaDoc._id;
     
-    const ClientExplosiveMusicLabelID = await BankClient.findOne({name: "Explosive Music Label",})._id;
-    const ClientInvisibleNeckTechnologiesID = await BankClient.findOne({name: "Invisible Neck Technologies",})._id;
-    const ClientOurFlowersIntID = await BankClient.findOne({name: "Our Flowers Int",})._id;
-    const ClientWorldWideSanctionsDeliveryID = await BankClient.findOne({name: "World Wide Sanctions Delivery",})._id;
-    const ClientCardDealerID = await BankClient.findOne({ name: "Card Dealer" })._id;
-    const ClientSuspiciousSharaghaID = await BankClient.findOne({name: "Suspicious Sharagha",})._id;
+    const ClientExplosiveMusicLabelDoc = await BankClient.findOne({name: "Explosive Music Label",});
+    if (!ClientExplosiveMusicLabelDoc) throw new Error("ClientExplosiveMusicLabelDoc not found");
+    const ClientExplosiveMusicLabelID = ClientExplosiveMusicLabelDoc._id;
+    const ClientInvisibleNeckTechnologiesDoc = await BankClient.findOne({name: "Invisible Neck Technologies",});
+    if (!ClientInvisibleNeckTechnologiesDoc) throw new Error("ClientInvisibleNeckTechnologiesDoc not found");
+    const ClientInvisibleNeckTechnologiesID = ClientInvisibleNeckTechnologiesDoc._id;
+    const ClientOurFlowersIntDoc = await BankClient.findOne({name: "Our Flowers Int",});
+    if (!ClientOurFlowersIntDoc) throw new Error("ClientOurFlowersIntDoc not found");
+    const ClientOurFlowersIntID = ClientOurFlowersIntDoc._id;
+    const ClientWorldWideSanctionsDeliveryDoc = await BankClient.findOne({name: "World Wide Sanctions Delivery",});
+    if (!ClientWorldWideSanctionsDeliveryDoc) throw new Error("ClientWorldWideSanctionsDeliveryDoc not found");
+    const ClientWorldWideSanctionsDeliveryID = ClientWorldWideSanctionsDeliveryDoc._id;
+    const ClientCardDealerDoc = await BankClient.findOne({ name: "Card Dealer" });
+    if (!ClientCardDealerDoc) throw new Error("ClientCardDealerDoc not found");
+    const ClientCardDealerID = ClientCardDealerDoc._id;
+    const ClientSuspiciousSharaghaDoc = await BankClient.findOne({name: "Suspicious Sharagha",});
+    if (!ClientSuspiciousSharaghaDoc) throw new Error("ClientSuspiciousSharaghaDoc not found");
+    const ClientSuspiciousSharaghaID = ClientSuspiciousSharaghaDoc._id;
 
     await PaymentRecord.insertMany([
       {
@@ -168,7 +184,7 @@ const seedDB = async () => {
         paymentDate: new Date("2025-07-01T11:30:32.214+03:00"),
       },
       {
-        loanTypeID: loanDliaKumaID,
+        loanTypeID: loanNeDliaKumaID,
         clientID: ClientSuspiciousSharaghaID,
         amount: 1,
         paymentDate: new Date("2025-08-01T11:30:32.214+03:00"),
@@ -183,10 +199,16 @@ seedDB();
 
 // const router = express.Router();
 
-// app.get('/', (req, res) => {
-//   res.send('API is running...');
-// })
+app.get('/', async (req, res) => {
+  try {
+    const typesOfLoan = await LoanType.find();
+    res.json({typesOfLoan});
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({error: "Server error"});
+  }
+}) 
 
-// app.listen(PORT, ()=> {
-//   console.log('Server is running');
-// })
+app.listen(PORT, ()=> {
+  console.log('Server is running');
+})
