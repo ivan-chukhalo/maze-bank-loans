@@ -15,8 +15,8 @@ const loanRecordsSchema = new mongoose.Schema({
   amount: {
     type: Number,
     required: true,
-    min: 100,
-    max: 1000,
+    min: 1,
+    max: 100000,
     default: 100,
   },
   loanDate: {

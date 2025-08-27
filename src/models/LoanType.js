@@ -3,7 +3,7 @@ import {loanNameValidator, LOAN_NAMES_RATES, termValidator} from "../utils/valid
 
 const loanTypesSchema = new mongoose.Schema({
   name: { type: String, required: true, validate: loanNameValidator },
-  rate: { type: Number, required: true, set: (value) => LOAN_NAMES_RATES[value] }, // in percent, set automatically base on the name. But probably virtual would be better. Fix later
+  // rate: { type: Number, required: true, set: (value) => LOAN_NAMES_RATES[value] }, // in percent, set automatically base on the name. But probably virtual would be better. Fix later
   term: {
     type: Number,
     required: true,
@@ -19,6 +19,10 @@ const loanTypesSchema = new mongoose.Schema({
     default: 10,
   }, // in percent
 });
+
+loanTypesSchema.virtual('rate').get(function () {
+  return LOAN_NAMES_RATES[this.name];
+})
 
 const LoanType = mongoose.model('LoanType', loanTypesSchema);
 
