@@ -47,4 +47,5 @@ export {
   termValidator,
   loanNameValidator,
   allowedPhoneValueRegex,
+  LOAN_NAMES_RATES,
 };

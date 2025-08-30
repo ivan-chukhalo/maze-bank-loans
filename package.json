@@ -2,9 +2,9 @@
   "name": "maze-bank-loans",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon app.js"
   },
   "keywords": [],
   "author": "Ivan Chukhalo",

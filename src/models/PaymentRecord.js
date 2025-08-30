@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import {creationDateValidator} from "../utils/validators.js";
 
 const paymentRecordSchema = new mongoose.Schema({
-  loanRecordID: {
+  loanTypeID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "LoanRecord",
     required: true,

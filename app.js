@@ -124,18 +124,23 @@ const seedDB = async () => {
     const ClientExplosiveMusicLabelDoc = await BankClient.findOne({name: "Explosive Music Label",});
     if (!ClientExplosiveMusicLabelDoc) throw new Error("ClientExplosiveMusicLabelDoc not found");
     const ClientExplosiveMusicLabelID = ClientExplosiveMusicLabelDoc._id;
+
     const ClientInvisibleNeckTechnologiesDoc = await BankClient.findOne({name: "Invisible Neck Technologies",});
     if (!ClientInvisibleNeckTechnologiesDoc) throw new Error("ClientInvisibleNeckTechnologiesDoc not found");
     const ClientInvisibleNeckTechnologiesID = ClientInvisibleNeckTechnologiesDoc._id;
+
     const ClientOurFlowersIntDoc = await BankClient.findOne({name: "Our Flowers Int",});
     if (!ClientOurFlowersIntDoc) throw new Error("ClientOurFlowersIntDoc not found");
     const ClientOurFlowersIntID = ClientOurFlowersIntDoc._id;
+
     const ClientWorldWideSanctionsDeliveryDoc = await BankClient.findOne({name: "World Wide Sanctions Delivery",});
     if (!ClientWorldWideSanctionsDeliveryDoc) throw new Error("ClientWorldWideSanctionsDeliveryDoc not found");
     const ClientWorldWideSanctionsDeliveryID = ClientWorldWideSanctionsDeliveryDoc._id;
+
     const ClientCardDealerDoc = await BankClient.findOne({ name: "Card Dealer" });
     if (!ClientCardDealerDoc) throw new Error("ClientCardDealerDoc not found");
     const ClientCardDealerID = ClientCardDealerDoc._id;
+    
     const ClientSuspiciousSharaghaDoc = await BankClient.findOne({name: "Suspicious Sharagha",});
     if (!ClientSuspiciousSharaghaDoc) throw new Error("ClientSuspiciousSharaghaDoc not found");
     const ClientSuspiciousSharaghaID = ClientSuspiciousSharaghaDoc._id;

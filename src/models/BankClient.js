@@ -29,6 +29,6 @@ const clientSchema = new mongoose.Schema({
   },
 });
 
-const Client = mongoose.model("Client", clientSchema);
+const BankClient = mongoose.model("BankClient", clientSchema);
 
-export default Client;
+export default BankClient;
