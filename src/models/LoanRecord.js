@@ -1,15 +1,15 @@
 import mongoose from "mongoose";
 import {creationDateValidator} from "../utils/validators.js";
+import {loanNameValidator} from '../utils/validators.js'
 
 const loanRecordsSchema = new mongoose.Schema({
-  loanTypeID: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "LoanType",
-    required: true,
+  loanName: {
+    type: String,
+    default: "Ne Dlia Kuma",
+    validate: loanNameValidator,
   },
-  clientID: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Client",
+  clientName: {
+    type: String,
     required: true,
   },
   amount: {
