@@ -81,4 +81,55 @@ const seedLoanRecord = [
   },
 ];
 
-export { seedClients, seedLoanTypes, seedLoanRecord };
+const seedPaymentRecord = [
+  {
+    loanName: "Dlia Kuma",
+    clientName: "Explosive Music Label",
+    amount: 50,
+    paymentDate: new Date("2025-01-01T15:30:32.214+03:00"),
+  },
+  {
+    loanName: "Dlia Kuma",
+    clientName: "Explosive Music Label",
+    amount: 100,
+    paymentDate: new Date("2025-02-01T15:30:32.214+03:00"),
+  },
+  {
+    loanName: "Dlia Kuma",
+    clientName: "Explosive Music Label",
+    amount: 200,
+    paymentDate: new Date("2025-03-01T11:30:32.214+03:00"),
+  },
+  {
+    loanName: "Dlia Kuma",
+    clientName: "Invisible Neck Technologies",
+    amount: 100,
+    paymentDate: new Date("2025-04-01T11:30:32.214+03:00"),
+  },
+  {
+    loanName: "Dlia Kuma",
+    clientName: "Our Flowers Int",
+    amount: 333,
+    paymentDate: new Date("2025-05-01T11:30:32.214+03:00"),
+  },
+  {
+    loanName: "Dlia Kuma",
+    clientName: "World Wide Sanctions Delivery",
+    amount: 400,
+    paymentDate: new Date("2025-06-01T11:30:32.214+03:00"),
+  },
+  {
+    loanName: "Dlia Kuma",
+    clientName: "Card Dealer",
+    amount: 5000,
+    paymentDate: new Date("2025-07-01T11:30:32.214+03:00"),
+  },
+  {
+    loanName: "Ne Dlia Kuma",
+    clientName: "Suspicious Sharagha",
+    amount: 1,
+    paymentDate: new Date("2025-08-01T11:30:32.214+03:00"),
+  },
+];
+
+export { seedClients, seedLoanTypes, seedLoanRecord, seedPaymentRecord };
