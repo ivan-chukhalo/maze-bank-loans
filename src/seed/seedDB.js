@@ -1,110 +1,30 @@
-import connectDB from '../config/db.js';
-
+import connectDB from "../config/db.js";
+// importing data models
 import BankClient from "../models/BankClient.js";
 import LoanType from "../models/LoanType.js";
 import LoanRecord from "../models/LoanRecord.js";
 import PaymentRecord from "../models/PaymentRecord.js";
-
+// importing seed data
+import { seedClients, seedLoanTypes, seedLoanRecord } from "./seedData.js";
 
 export default async function seedDB() {
   try {
     await connectDB();
 
-    // cleaning up the database
+    // cleaning up the database. You don't wrap this request with Promise.all() to avoid errors when, for instanse, LoanType is cleaned before LoarRecord
     await BankClient.deleteMany();
     await LoanRecord.deleteMany();
     await LoanType.deleteMany();
     await PaymentRecord.deleteMany();
 
     // Adding BankClients
-    await BankClient.insertMany([
-      {
-        name: "Explosive Music Label",
-        phone: "+380111111111",
-        contactPerson: "Pes Patron",
-        createdAt: new Date(),
-      },
-      {
-        name: "Invisible Neck Technologies",
-        phone: "+380222222222",
-        contactPerson: "Mykhaylo Lebiga",
-        createdAt: new Date(),
-      },
-      {
-        name: "Our Flowers Int",
-        phone: "+380333333333",
-        contactPerson: "Mykola Zyrianov",
-        createdAt: new Date(),
-      },
-      {
-        name: "World Wide Sanctions Delivery",
-        phone: "+380444444444",
-        contactPerson: "Vasyl Maluk",
-        createdAt: new Date(),
-      },
-      {
-        name: "Card Dealer",
-        phone: "+380555555555",
-        contactPerson: "Kyrylo Budanov",
-        createdAt: new Date(),
-      },
-      {
-        name: "Suspicious Sharagha",
-        phone: "+380666666666",
-        contactPerson: "Some From Above",
-        createdAt: new Date(),
-      },
-    ]);
+    await BankClient.insertMany(seedClients);
 
     // Adding LoanTypes
-    await LoanType.insertMany([
-      { name: "Dlia Kuma", term: 120, yearPenaltyRate: 10 },
-      { name: "Ne Dlia Kuma", term: 120, yearPenaltyRate: 100 },
-    ]);
+    await LoanType.insertMany(seedLoanTypes);
 
     // Adding LoanRecords
-    await LoanRecord.insertMany([
-      {
-        loanTypeID: await LoanType.findOne({ name: "Dlia Kuma" }),
-        clientID: await BankClient.findOne({ name: "Explosive Music Label" }),
-        amount: 1000,
-        status: "active",
-      },
-      {
-        loanTypeID: await LoanType.findOne({ name: "Dlia Kuma" }),
-        clientID: await BankClient.findOne({
-          name: "Invisible Neck Technologies",
-        }),
-        amount: 2000,
-        status: "active",
-      },
-      {
-        loanTypeID: await LoanType.findOne({ name: "Dlia Kuma" }),
-        clientID: await BankClient.findOne({ name: "Our Flowers Int" }),
-        amount: 3000,
-        status: "active",
-      },
-      {
-        loanTypeID: await LoanType.findOne({ name: "Dlia Kuma" }),
-        clientID: await BankClient.findOne({
-          name: "World Wide Sanctions Delivery",
-        }),
-        amount: 4000,
-        status: "active",
-      },
-      {
-        loanTypeID: await LoanType.findOne({ name: "Dlia Kuma" }),
-        clientID: await BankClient.findOne({ name: "Card Dealer" }),
-        amount: 5000,
-        status: "closed",
-      },
-      {
-        loanTypeID: await LoanType.findOne({ name: "Ne Dlia Kuma" }),
-        clientID: await BankClient.findOne({ name: "Suspicious Sharagha" }),
-        amount: 5,
-        status: "defaulted",
-      },
-    ]);
+    await LoanRecord.insertMany(seedLoanRecord);
 
     // Adding PaymentRecords (loanTypes identifiers, clientID identifiers, then inserting records)
     const loanDliaKumaDoc = await LoanType.findOne({ name: "Dlia Kuma" });
