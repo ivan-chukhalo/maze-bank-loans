@@ -4,7 +4,7 @@ import seedDB from "./src/seed/seedDB.js"
 
 // routes
 import clientsRouter from "./src/routes/clientsRouter.js";
-import loanTypesRouter from './src/routes/loanTypesRouter.js'
+import loanRouter from './src/routes/loansRouter.js'
 import issuedLoansRouter from './src/routes/issuedLoansRouter.js'
 import paymentsRouter from './src/routes/paymentsRouter.js'
 
@@ -18,7 +18,7 @@ seedDB();
 app.use(express.json());
 
 app.use('/clients', clientsRouter);
-app.use('/loans', loanTypesRouter);
+app.use('/loans', loanRouter);
 app.use('/issuedLoans', issuedLoansRouter);
 app.use('/payments', paymentsRouter);
 
