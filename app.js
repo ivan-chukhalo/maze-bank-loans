@@ -2,7 +2,11 @@ import express from "express";
 import dotenv from "dotenv";
 import seedDB from "./src/seed/seedDB.js"
 
-import LoanType from "./src/models/LoanType.js";
+// routes
+import clientsRouter from "./src/routes/clientsRouter.js";
+import loanTypesRouter from './src/routes/loanTypesRouter.js'
+import issuedLoansRouter from './src/routes/issuedLoansRouter.js'
+import paymentsRouter from './src/routes/paymentsRouter.js'
 
 dotenv.config(); // Load environment variables from .env
 const PORT = process.env.PORT || 3000;
@@ -11,15 +15,12 @@ const app = express();
 
 seedDB();
 
-app.get('/', async (req, res) => {
-  try {
-    const typesOfLoan = await LoanType.find();
-    res.json({typesOfLoan});
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({error: "Server error"});
-  }
-}) 
+app.use(express.json());
+
+app.use('/clients', clientsRouter);
+app.use('/loans', loanTypesRouter);
+app.use('/issuedLoans', issuedLoansRouter);
+app.use('/payments', paymentsRouter);
 
 app.listen(PORT, ()=> {
   console.log('Server is running');
