@@ -1,9 +1,12 @@
 import mongoose from "mongoose";
-import {loanNameValidator, LOAN_NAMES_RATES, termValidator} from "../utils/validators.js";
+import {
+  loanNameValidator,
+  LOAN_NAMES_RATES,
+  termValidator,
+} from "../utils/validators.js";
 
 const loanTypesSchema = new mongoose.Schema({
   name: { type: String, required: true, validate: loanNameValidator },
-  // rate: { type: Number, required: true, set: (value) => LOAN_NAMES_RATES[value] }, // in percent, set automatically base on the name. But probably virtual would be better. Fix later
   term: {
     type: Number,
     required: true,
@@ -20,10 +23,10 @@ const loanTypesSchema = new mongoose.Schema({
   }, // in percent
 });
 
-loanTypesSchema.virtual('rate').get(function () {
+loanTypesSchema.virtual("rate").get(function () {
   return LOAN_NAMES_RATES[this.name];
-})
+});
 
-const LoanType = mongoose.model('LoanType', loanTypesSchema);
+const LoanType = mongoose.model("LoanType", loanTypesSchema);
 
 export default LoanType;

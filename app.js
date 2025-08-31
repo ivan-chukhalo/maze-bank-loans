@@ -2,7 +2,6 @@ import express from "express";
 import dotenv from "dotenv";
 import seedDB from "./src/seed/seedDB.js"
 
-// routes
 import clientsRouter from "./src/routes/clientsRouter.js";
 import loanRouter from './src/routes/loansRouter.js'
 import issuedLoansRouter from './src/routes/issuedLoansRouter.js'
