@@ -62,3 +62,17 @@ export const editClient = async (req, res) => {
     res.status(500).json({ error: "Could not edit the client" });
   }
 };
+
+// DELETE: delete client from database
+export const deleteClient = async (req, res) => {
+  try {
+    const clientID = req.params.id;
+    const deletedClient = await BankClient.findByIdAndDelete(clientID);
+    if (!deletedClient) {
+      return res.status(404).json({ message: `Can't find the client` });
+    }
+    res.json({ message: "Deleted successfully", client: deletedClient });
+  } catch (err) {
+    res.status(500).json({ message: "Could not delete the client" });
+  }
+};
