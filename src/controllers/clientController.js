@@ -24,8 +24,8 @@ export const getClientByID = async (req, res) => {
 // POST: add new client to database
 export const addClient = async (req, res) => {
   try {
-    const { name, phone, contactPerson, createdAt } = req.body;
-    const newClient = new BankClient({ name, phone, contactPerson, createdAt });
+    const { name, phone, contactPerson, } = req.body;
+    const newClient = new BankClient({ name, phone, contactPerson, });
     await newClient.save();
     res
       .status(201)
