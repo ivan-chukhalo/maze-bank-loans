@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import {getLoans, getLoanById, createLoan, updateLoan, deleteLoan} from '../controllers/loansController.js';
+import {getLoans, getLoanByID, createNewLoanType, editLoanType, deleteLoanType} from '../controllers/loansController.js';
 
 const loansRouter = Router();
 
 loansRouter.get('/', getLoans);
-loansRouter.get('/:id', getLoanById);
-loansRouter.post('/', createLoan);
-loansRouter.put('/:id', updateLoan);
-loansRouter.delete('/:id', deleteLoan);
+loansRouter.get('/:id', getLoanByID);
+loansRouter.post('/', createNewLoanType);
+loansRouter.put('/:id', editLoanType);
+loansRouter.delete('/:id', deleteLoanType);
 
 export default loansRouter;
