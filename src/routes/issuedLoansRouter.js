@@ -1,11 +1,12 @@
 import { Router } from 'express';
+import {getAllIssuedLoans, getIssuedLoanByID, createIssuedLoan, editRecordOfIssuedLoan, deleteIssuedLoanRecord} from '../controllers/issuedLoansController.js';
 
 const issuedLoansRouter = Router();
 
-issuedLoansRouter.get('/', (req, res) => res.send('All issued loans'));
-issuedLoansRouter.get('/:id', (req, res) => res.send(`Return issued loan by their ID`));
-issuedLoansRouter.post('/', (req, res) => res.send('Create loan'));
-issuedLoansRouter.put('/:id', (req, res) => res.send('Update info about an issued loan'));
-issuedLoansRouter.delete('/:id', (req, res) => res.send('Delete a loan'));
+issuedLoansRouter.get('/', getAllIssuedLoans);
+issuedLoansRouter.get('/:id', getIssuedLoanByID);
+issuedLoansRouter.post('/', createIssuedLoan);
+issuedLoansRouter.put('/:id', editRecordOfIssuedLoan);
+issuedLoansRouter.delete('/:id', deleteIssuedLoanRecord);
 
 export default issuedLoansRouter;
