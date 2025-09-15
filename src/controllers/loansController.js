@@ -1,8 +1,8 @@
-import LoanType from "../models/LoanType.js";
+import Loan from "../models/Loan.js";
 
 export const getLoans = async (req, res) => {
   try {
-    const loans = await LoanType.find();
+    const loans = await Loan.find();
     res.json(loans);
   } catch (err) {
     res
@@ -14,7 +14,7 @@ export const getLoans = async (req, res) => {
 export const getLoanByID = async (req, res) => {
   try {
     const loanID = req.params.id;
-    const requestedLoan = await LoanType.findById(loanID);
+    const requestedLoan = await Loan.findById(loanID);
     if (!requestedLoan) {
       return res
         .status(404)
@@ -28,14 +28,14 @@ export const getLoanByID = async (req, res) => {
   }
 };
 
-export const createNewLoanType = async (req, res) => {
+export const createNewLoan = async (req, res) => {
   try {
     const { name, term, yearPenaltyRate } = req.body;
-    const newLoanType = new LoanType({ name, term, yearPenaltyRate });
-    await newLoanType.save();
+    const newLoan = new Loan({ name, term, yearPenaltyRate });
+    await newLoan.save();
     res.status(201).json({
       message: `New loan ${name} created successfully`,
-      loanType: newLoanType,
+      loan: newLoan,
     });
   } catch (err) {
     res
@@ -44,25 +44,21 @@ export const createNewLoanType = async (req, res) => {
   }
 };
 
-export const editLoanType = async (req, res) => {
+export const editLoan = async (req, res) => {
   try {
-    const loanTypeID = req.params.id;
+    const loanID = req.params.id;
     const newLoanData = req.body;
-    const updatedLoanType = await LoanType.findByIdAndUpdate(
-      loanTypeID,
-      newLoanData,
-      {
-        new: true,
-        upsert: false,
-        runValidators: true,
-      }
-    );
-    if (!updatedLoanType) {
+    const updatedLoan = await Loan.findByIdAndUpdate(loanID, newLoanData, {
+      new: true,
+      upsert: false,
+      runValidators: true,
+    });
+    if (!updatedLoan) {
       return res
         .status(404)
-        .json({ message: `Can not find a loan type with ${loanTypeID} ID` });
+        .json({ message: `Can not find a loan type with ${loanID} ID` });
     }
-    res.json({ message: "Loan type updated successfully", updatedLoanType });
+    res.json({ message: "Loan type updated successfully", updatedLoan });
   } catch (err) {
     res
       .status(500)
@@ -70,16 +66,16 @@ export const editLoanType = async (req, res) => {
   }
 };
 
-export const deleteLoanType = async (req, res) => {
+export const deleteLoan = async (req, res) => {
   try {
-    const loanTypeID = req.params.id;
-    const deletedLoanType = await LoanType.findByIdAndDelete(loanTypeID);
-    if (!deletedLoanType) {
+    const loanID = req.params.id;
+    const deletedLoan = await Loan.findByIdAndDelete(loanID);
+    if (!deletedLoan) {
       return res
         .status(404)
-        .json({ message: `Can not find loan type with ${loanTypeID} ID` });
+        .json({ message: `Can not find loan type with ${loanID} ID` });
     }
-    res.json({ message: "Deleted sucessfully", deletedLoanType });
+    res.json({ message: "Deleted sucessfully", deletedLoan });
   } catch (err) {
     res
       .status(500)

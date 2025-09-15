@@ -33,6 +33,6 @@ const loanRecordsSchema = new mongoose.Schema({
   },
 });
 
-const LoanRecord = mongoose.model("LoanRecord", loanRecordsSchema);
+const IssuedLoan = mongoose.model("IssuedLoan", loanRecordsSchema);
 
-export default LoanRecord;
+export default IssuedLoan;

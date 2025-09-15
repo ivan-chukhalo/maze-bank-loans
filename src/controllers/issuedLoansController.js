@@ -1,8 +1,8 @@
-import LoanRecord from "../models/LoanRecord.js";
+import IssuedLoan from "../models/IssuedLoan.js";
 
 export const getLoans = async (req, res) => {
   try {
-    const loans = await LoanRecord.find();
+    const loans = await IssuedLoan.find();
     res.json(loans);
   } catch (err) {
     res
@@ -14,7 +14,7 @@ export const getLoans = async (req, res) => {
 export const getLoanByID = async (req, res) => {
   try {
     const loanID = req.params.id;
-    const requestedLoan = await LoanRecord.findById(loanID);
+    const requestedLoan = await IssuedLoan.findById(loanID);
     if (!requestedLoan) {
       return res
         .status(404)
@@ -31,11 +31,11 @@ export const getLoanByID = async (req, res) => {
 export const createNewLoanRecord = async (req, res) => {
   try {
     const { name, term, yearPenaltyRate } = req.body;
-    const newLoanRecord = new LoanRecord({ name, term, yearPenaltyRate });
+    const newLoanRecord = new IssuedLoan({ name, term, yearPenaltyRate });
     await newLoanRecord.save();
     res.status(201).json({
       message: `New loan ${name} created successfully`,
-      LoanRecord: newLoanRecord,
+      IssuedLoan: newLoanRecord,
     });
   } catch (err) {
     res
@@ -48,7 +48,7 @@ export const editLoanRecord = async (req, res) => {
   try {
     const LoanRecordID = req.params.id;
     const newLoanData = req.body;
-    const updatedLoanRecord = await LoanRecord.findByIdAndUpdate(
+    const updatedLoanRecord = await IssuedLoan.findByIdAndUpdate(
       LoanRecordID,
       newLoanData,
       {
@@ -73,7 +73,7 @@ export const editLoanRecord = async (req, res) => {
 export const deleteLoanRecord = async (req, res) => {
   try {
     const LoanRecordID = req.params.id;
-    const deletedLoanRecord = await LoanRecord.findByIdAndDelete(LoanRecordID);
+    const deletedLoanRecord = await IssuedLoan.findByIdAndDelete(LoanRecordID);
     if (!deletedLoanRecord) {
       return res
         .status(404)

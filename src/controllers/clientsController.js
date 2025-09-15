@@ -1,9 +1,9 @@
-import BankClient from "../models/BankClient.js";
+import Client from "../models/Client.js";
 
 // GET: return all clients
 export const getAllClients = async (req, res) => {
   try {
-    const clients = await BankClient.find();
+    const clients = await Client.find();
     res.json(clients);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -14,7 +14,7 @@ export const getAllClients = async (req, res) => {
 export const getClientByID = async (req, res) => {
   try {
     const clientID = req.params.id;
-    const theClient = await BankClient.findById(clientID);
+    const theClient = await Client.findById(clientID);
     res.json(theClient);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -25,7 +25,7 @@ export const getClientByID = async (req, res) => {
 export const addClient = async (req, res) => {
   try {
     const { name, phone, contactPerson } = req.body;
-    const newClient = new BankClient({ name, phone, contactPerson });
+    const newClient = new Client({ name, phone, contactPerson });
     await newClient.save();
     res.status(201).json({
       message: `Client ${name} is succesfully created`,
@@ -42,7 +42,7 @@ export const editClient = async (req, res) => {
     const clientID = req.params.id;
     const newData = req.body;
 
-    const updatedClient = await BankClient.findByIdAndUpdate(
+    const updatedClient = await Client.findByIdAndUpdate(
       clientID,
       newData,
       {
@@ -67,7 +67,7 @@ export const editClient = async (req, res) => {
 export const deleteClient = async (req, res) => {
   try {
     const clientID = req.params.id;
-    const deletedClient = await BankClient.findByIdAndDelete(clientID);
+    const deletedClient = await Client.findByIdAndDelete(clientID);
     if (!deletedClient) {
       return res.status(404).json({ message: `Can't find the client` });
     }

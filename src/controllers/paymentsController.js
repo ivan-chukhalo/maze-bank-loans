@@ -1,9 +1,9 @@
-import PaymentRecord from "../models/PaymentRecord.js";
+import Payment from "../models/Payment.js";
 
 // GET: return records about all payments made
 export const getAllPaymentREcords = async (req, res) => {
   try {
-    const allPaymentRecords = await PaymentRecord.find();
+    const allPaymentRecords = await Payment.find();
     res.json(allPaymentRecords);
   } catch (err) {
     res
@@ -16,13 +16,13 @@ export const getAllPaymentREcords = async (req, res) => {
 export const getPaymentRecordByID = async (req, res) => {
   try {
     const paymentRecordID = req.params.id;
-    const paymentRecord = await PaymentRecord.findById(paymentRecordID);
-    if (!paymentRecord) {
+    const Payment = await Payment.findById(paymentRecordID);
+    if (!Payment) {
       return res.status(404).json({
         message: `Cant find the payment record with ${paymentRecordID} ID`,
       });
     }
-    res.json(paymentRecord);
+    res.json(Payment);
   } catch (err) {
     res
       .status(500)
@@ -34,7 +34,7 @@ export const getPaymentRecordByID = async (req, res) => {
 export const addPaymentRecord = async (req, res) => {
   try {
     const { loanName, clientName, amount, paymentDate } = req.body;
-    const newPaymentRecord = new PaymentRecord({
+    const newPaymentRecord = new Payment({
       loanName,
       clientName,
       amount,
@@ -43,7 +43,7 @@ export const addPaymentRecord = async (req, res) => {
     await newPaymentRecord.save();
     res.status(201).json({
       message: `Payment record for loan ${loanName} is successfully created`,
-      paymentRecord: newPaymentRecord,
+      Payment: newPaymentRecord,
     });
   } catch (err) {
     res
@@ -57,7 +57,7 @@ export const editPaymentRecord = async (req, res) => {
   try {
     const paymentRecordID = req.params.id;
     const newData = req.body;
-    const updatedPaymentRecord = await PaymentRecord.findByIdAndUpdate(
+    const updatedPaymentRecord = await Payment.findByIdAndUpdate(
       paymentRecordID,
       newData,
       {
@@ -74,7 +74,7 @@ export const editPaymentRecord = async (req, res) => {
     }
     res.json({
       message: `Payment record for loan ${updatedPaymentRecord.loanName} updated successfully`,
-      paymentRecord: updatedPaymentRerord,
+      Payment: updatedPaymentRerord,
     });
   } catch (err) {
     res
@@ -87,7 +87,7 @@ export const editPaymentRecord = async (req, res) => {
 export const deletePaymentRecord = async (req, res) => {
   try {
     const paymentRecordID = req.params.id;
-    const deletedPaymentRecord = await PaymentRecord.findByIdAndDelete(
+    const deletedPaymentRecord = await Payment.findByIdAndDelete(
       paymentRecordID
     );
     if (!deletedPaymentRecord) {
@@ -95,7 +95,7 @@ export const deletePaymentRecord = async (req, res) => {
     }
     res.json({
       message: "Deleted successfully",
-      paymentRecord: deletedPaymentRecord,
+      Payment: deletedPaymentRecord,
     });
   } catch (err) {
     res

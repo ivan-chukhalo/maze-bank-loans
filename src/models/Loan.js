@@ -5,7 +5,7 @@ import {
   termValidator,
 } from "../utils/validators.js";
 
-const loanTypesSchema = new mongoose.Schema({
+const loanSchema = new mongoose.Schema({
   name: { type: String, required: true, validate: loanNameValidator },
   term: {
     type: Number,
@@ -23,10 +23,10 @@ const loanTypesSchema = new mongoose.Schema({
   }, // in percent
 });
 
-loanTypesSchema.virtual("rate").get(function () {
+loanSchema.virtual("rate").get(function () {
   return LOAN_NAMES_RATES[this.name];
 });
 
-const LoanType = mongoose.model("LoanType", loanTypesSchema);
+const Loan = mongoose.model("Loan", loanSchema);
 
-export default LoanType;
+export default Loan;
