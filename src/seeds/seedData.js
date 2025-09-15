@@ -37,12 +37,12 @@ const seedClients = [
   },
 ];
 
-const seedLoanTypes = [
+const seedLoans = [
   { name: "Dlia Kuma", term: 120, yearPenaltyRate: 10 },
   { name: "Ne Dlia Kuma", term: 120, yearPenaltyRate: 100 },
 ];
 
-const seedLoanRecord = [
+const seedIssuedLoans = [
   {
     loandName: "Dlia Kuma",
     clientName: "Explosive Music Label",
@@ -81,7 +81,7 @@ const seedLoanRecord = [
   },
 ];
 
-const seedPaymentRecord = [
+const seedPayments = [
   {
     loanName: "Dlia Kuma",
     clientName: "Explosive Music Label",
@@ -132,4 +132,4 @@ const seedPaymentRecord = [
   },
 ];
 
-export { seedClients, seedLoanTypes, seedLoanRecord, seedPaymentRecord };
+export { seedClients, seedLoans, seedIssuedLoans, seedPayments };

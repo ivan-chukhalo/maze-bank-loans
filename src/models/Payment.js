@@ -25,6 +25,6 @@ const paymentRecordSchema = new mongoose.Schema({
   },
 });
 
-const PaymentRecord = mongoose.model("PaymentRecord", paymentRecordSchema);
+const Payment = mongoose.model("Payment", paymentRecordSchema);
 
-export default PaymentRecord;
+export default Payment;
