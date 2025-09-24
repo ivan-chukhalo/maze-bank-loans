@@ -59,7 +59,7 @@ export const editClient = async (req, res) => {
 
     res.json({ message: `Client ${updatedClient.name} updated successfully` });
   } catch (err) {
-    res.status(500).json({ error: "Could not edit the client" });
+    res.status(500).json({ message: "Could not edit the client", errorMesage: err.message});
   }
 };
 

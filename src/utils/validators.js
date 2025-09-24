@@ -24,28 +24,9 @@ const termValidator = {
   message: (props) => `Term must be an integer between 12 and 120 months`,
 };
 
-const LOAN_NAMES_RATES = {
-  "Dlia Kuma": 1,
-  "Ne Dlia Kuma": 10,
-};
-
-const loanNameValidator = {
-  validator: function (value) {
-    return Object.keys(LOAN_NAMES_RATES).includes(value);
-  },
-  message: (props) =>
-    `Loan name ${
-      props.value
-    } is not recognized. Allowsed names are: ${Object.keys(
-      LOAN_NAMES_RATES
-    ).join(", ")}`,
-};
-
 export {
   textValuesValidator,
   creationDateValidator,
   termValidator,
-  loanNameValidator,
   allowedPhoneValueRegex,
-  LOAN_NAMES_RATES,
 };

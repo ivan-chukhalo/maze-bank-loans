@@ -1,11 +1,10 @@
 import mongoose from "mongoose";
-import {creationDateValidator, loanNameValidator} from "../utils/validators.js";
+import {creationDateValidator} from "../utils/validators.js";
 
 const paymentRecordSchema = new mongoose.Schema({
   loanName: {
     type: String,
     required: true,
-    validate: loanNameValidator,
   },
   clientName: {
     type: String,

@@ -1,12 +1,8 @@
 import mongoose from "mongoose";
-import {
-  loanNameValidator,
-  LOAN_NAMES_RATES,
-  termValidator,
-} from "../utils/validators.js";
+import { termValidator } from "../utils/validators.js";
 
 const loanSchema = new mongoose.Schema({
-  name: { type: String, required: true, validate: loanNameValidator },
+  name: { type: String, required: true },
   term: {
     type: Number,
     required: true,
@@ -21,10 +17,13 @@ const loanSchema = new mongoose.Schema({
     max: 100,
     default: 10,
   }, // in percent
-});
-
-loanSchema.virtual("rate").get(function () {
-  return LOAN_NAMES_RATES[this.name];
+  rate: {
+    type: Number,
+    required: true,
+    min: 1, // in percent
+    max: 10, // in percent
+    default: 1,
+  },
 });
 
 const Loan = mongoose.model("Loan", loanSchema);

@@ -38,43 +38,43 @@ const seedClients = [
 ];
 
 const seedLoans = [
-  { name: "Dlia Kuma", term: 120, yearPenaltyRate: 10 },
-  { name: "Ne Dlia Kuma", term: 120, yearPenaltyRate: 100 },
+  { name: "Dlia Kuma", term: 120, yearPenaltyRate: 10, rate: 1 },
+  { name: "Ne Dlia Kuma", term: 120, yearPenaltyRate: 100, rate: 10 },
 ];
 
 const seedIssuedLoans = [
   {
-    loandName: "Dlia Kuma",
+    loanName: "Dlia Kuma",
     clientName: "Explosive Music Label",
     amount: 1000,
     status: "active",
   },
   {
-    loandName: "Dlia Kuma",
+    loanName: "Dlia Kuma",
     clientName: "Invisible Neck Technologies",
     amount: 2000,
     status: "active",
   },
   {
-    loandName: "Dlia Kuma",
+    loanName: "Dlia Kuma",
     clientName: "Our Flowers Int",
     amount: 3000,
     status: "active",
   },
   {
-    loandName: "Dlia Kuma",
+    loanName: "Dlia Kuma",
     clientName: "World Wide Sanctions Delivery",
     amount: 4000,
     status: "active",
   },
   {
-    loandName: "Dlia Kuma",
+    loanName: "Dlia Kuma",
     clientName: "Card Dealer",
     amount: 5000,
     status: "closed",
   },
   {
-    loandName: "Ne Dlia Kuma",
+    loanName: "Ne Dlia Kuma",
     clientName: "Suspicious Sharagha",
     amount: 5,
     status: "defaulted",
