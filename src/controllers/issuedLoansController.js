@@ -30,11 +30,11 @@ export const getLoanByID = async (req, res) => {
 
 export const createNewLoanRecord = async (req, res) => {
   try {
-    const { name, term, yearPenaltyRate } = req.body;
-    const newLoanRecord = new IssuedLoan({ name, term, yearPenaltyRate });
+    const { loanName, clientName, amount } = req.body;
+    const newLoanRecord = new IssuedLoan({ loanName, clientName, amount });
     await newLoanRecord.save();
     res.status(201).json({
-      message: `New loan ${name} created successfully`,
+      message: `New loan ${loanName} created successfully`,
       IssuedLoan: newLoanRecord,
     });
   } catch (err) {

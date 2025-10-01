@@ -4,9 +4,9 @@ import Client from "../models/Client.js";
 export const getAllClients = async (req, res) => {
   try {
     const clients = await Client.find();
-    res.json(clients);
+    res.json({ message: "Clients fetched successfully", data: clients });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: err.message, data: null });
   }
 };
 
@@ -15,9 +15,9 @@ export const getClientByID = async (req, res) => {
   try {
     const clientID = req.params.id;
     const theClient = await Client.findById(clientID);
-    res.json(theClient);
+    res.json({ message: "Client fetched successfully", data: theClient });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: err.message, data: null });
   }
 };
 
@@ -28,11 +28,11 @@ export const addClient = async (req, res) => {
     const newClient = new Client({ name, phone, contactPerson });
     await newClient.save();
     res.status(201).json({
-      message: `Client ${name} is succesfully created`,
-      client: newClient,
+      message: "New client added successfully",
+      data: newClient,
     });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: err.message, data: null });
   }
 };
 
@@ -42,24 +42,22 @@ export const editClient = async (req, res) => {
     const clientID = req.params.id;
     const newData = req.body;
 
-    const updatedClient = await Client.findByIdAndUpdate(
-      clientID,
-      newData,
-      {
-        new: true,
-        upsert: false,
-        runValidators: true,
-      }
-    );
+    const updatedClient = await Client.findByIdAndUpdate(clientID, newData, {
+      new: true,
+      upsert: false,
+      runValidators: true,
+    });
 
     if (!updatedClient) {
       // mongo returns Null if can't find the client by ID
-      res.status(404).json({ message: `Can't find the client` });
+      res.status(404).json({ message: `Client not found`, data: null });
     }
 
-    res.json({ message: `Client ${updatedClient.name} updated successfully` });
+    res.json({ message: 'Client updated successfully', data: updatedClient });
   } catch (err) {
-    res.status(500).json({ message: "Could not edit the client", errorMesage: err.message});
+    res
+      .status(500)
+      .json({ message: err.message, data: null });// Internal server error
   }
 };
 
@@ -69,10 +67,10 @@ export const deleteClient = async (req, res) => {
     const clientID = req.params.id;
     const deletedClient = await Client.findByIdAndDelete(clientID);
     if (!deletedClient) {
-      return res.status(404).json({ message: `Can't find the client` });
+      return res.status(404).json({ message: "Client not found", data: null });
     }
-    res.json({ message: "Deleted successfully", client: deletedClient });
+    res.json({ message: "Client deleted successfully", data: deletedClient });
   } catch (err) {
-    res.status(500).json({ message: "Could not delete the client" });
+    res.status(500).json({ message: err.message, data: null });
   }
 };
