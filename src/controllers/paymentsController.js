@@ -4,11 +4,12 @@ import Payment from "../models/Payment.js";
 export const getAllPaymentREcords = async (req, res) => {
   try {
     const allPaymentRecords = await Payment.find();
-    res.json(allPaymentRecords);
+    res.json({
+      message: "All payment records fetched successfully",
+      data: allPaymentRecords,
+    });
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: "Internal server error", errorMessage: err.message });
+    res.status(500).json({ message: err.message, data: null });
   }
 };
 
@@ -16,17 +17,16 @@ export const getAllPaymentREcords = async (req, res) => {
 export const getPaymentRecordByID = async (req, res) => {
   try {
     const paymentRecordID = req.params.id;
-    const Payment = await Payment.findById(paymentRecordID);
-    if (!Payment) {
+    const paymentRecord = await Payment.findById(paymentRecordID);
+    if (!paymentRecord) {
       return res.status(404).json({
-        message: `Cant find the payment record with ${paymentRecordID} ID`,
+        message: `Payment record not found`,
+        data: null,
       });
     }
-    res.json(Payment);
+    res.json({ message: "Payment record fetched successfully", data: paymentRecord });
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: "Internal server error", errorMessage: err.message });
+    res.status(500).json({ message: err.message, data: null });
   }
 };
 
@@ -42,13 +42,11 @@ export const addPaymentRecord = async (req, res) => {
     });
     await newPaymentRecord.save();
     res.status(201).json({
-      message: `Payment record for loan ${loanName} is successfully created`,
-      Payment: newPaymentRecord,
+      message: "New payment record created successfully",
+      data: newPaymentRecord,
     });
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: "Internal server error", errorMessage: err.message });
+    res.status(500).json({ message: err.message, data: null });
   }
 };
 
@@ -70,16 +68,14 @@ export const editPaymentRecord = async (req, res) => {
       // mongo returns Null if can't find the payment record by ID
       return res
         .status(404)
-        .json({ message: `Can not find the payment record` });
+        .json({ message: `Payment record not found`, data: null });
     }
     res.json({
-      message: `Payment record for loan ${updatedPaymentRecord.loanName} updated successfully`,
-      Payment: updatedPaymentRerord,
+      message: "Payment record updated successfully",
+      data: updatedPaymentRecord,
     });
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: "Internal server error", errorMessage: err.message });
+    res.status(500).json({ message: err.message, data: null });
   }
 };
 
@@ -91,15 +87,15 @@ export const deletePaymentRecord = async (req, res) => {
       paymentRecordID
     );
     if (!deletedPaymentRecord) {
-      return res.status(404).json({ message: `Can't find the payment record` });
+      return res
+        .status(404)
+        .json({ message: `Payment record not found`, data: null });
     }
     res.json({
-      message: "Deleted successfully",
-      Payment: deletedPaymentRecord,
+      message: "Payment record deleted successfully",
+      data: deletedPaymentRecord,
     });
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: "Internal server error", errorMessage: err.message });
+    res.status(500).json({ message: err.message, data: null });
   }
 };
