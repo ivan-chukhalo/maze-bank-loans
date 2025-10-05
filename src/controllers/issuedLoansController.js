@@ -1,5 +1,6 @@
 import IssuedLoan from "../models/IssuedLoan.js";
 
+// GET: return records about all issued loans
 export const getLoans = async (req, res) => {
   try {
     const loans = await IssuedLoan.find();
@@ -9,6 +10,7 @@ export const getLoans = async (req, res) => {
   }
 };
 
+// GET: return record about issued loan by its ID
 export const getLoanByID = async (req, res) => {
   try {
     const loanID = req.params.id;
@@ -22,6 +24,7 @@ export const getLoanByID = async (req, res) => {
   }
 };
 
+// POST: add record about issued loan
 export const createNewLoanRecord = async (req, res) => {
   try {
     const { loanName, clientName, amount } = req.body;
@@ -36,6 +39,7 @@ export const createNewLoanRecord = async (req, res) => {
   }
 };
 
+// PUT: update record about issued loan
 export const editLoanRecord = async (req, res) => {
   try {
     const LoanRecordID = req.params.id;
@@ -58,6 +62,7 @@ export const editLoanRecord = async (req, res) => {
   }
 };
 
+// DELETE: delete record about issued loan
 export const deleteLoanRecord = async (req, res) => {
   try {
     const LoanRecordID = req.params.id;

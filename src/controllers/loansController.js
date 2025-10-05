@@ -1,5 +1,6 @@
 import Loan from "../models/Loan.js";
 
+// GET: return records about all loan types
 export const getLoans = async (req, res) => {
   try {
     const loans = await Loan.find();
@@ -9,6 +10,7 @@ export const getLoans = async (req, res) => {
   }
 };
 
+// GET: return record about loan type by its ID
 export const getLoanByID = async (req, res) => {
   try {
     const loanID = req.params.id;
@@ -22,6 +24,7 @@ export const getLoanByID = async (req, res) => {
   }
 };
 
+// POST: add record about loan type
 export const createNewLoan = async (req, res) => {
   try {
     const { name, term, yearPenaltyRate } = req.body;
@@ -36,6 +39,7 @@ export const createNewLoan = async (req, res) => {
   }
 };
 
+// PUT: update record about loan type
 export const editLoan = async (req, res) => {
   try {
     const loanID = req.params.id;
@@ -54,6 +58,7 @@ export const editLoan = async (req, res) => {
   }
 };
 
+// DELETE: delete record about loan type
 export const deleteLoan = async (req, res) => {
   try {
     const loanID = req.params.id;
