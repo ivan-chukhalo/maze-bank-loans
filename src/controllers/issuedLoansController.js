@@ -3,11 +3,9 @@ import IssuedLoan from "../models/IssuedLoan.js";
 export const getLoans = async (req, res) => {
   try {
     const loans = await IssuedLoan.find();
-    res.json(loans);
+    res.json({ message: "Issued loans fetched successfully", data: loans });
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: "Internal server error", errorMessage: err.message });
+    res.status(500).json({ message: err.message, data: null });
   }
 };
 
@@ -16,31 +14,25 @@ export const getLoanByID = async (req, res) => {
     const loanID = req.params.id;
     const requestedLoan = await IssuedLoan.findById(loanID);
     if (!requestedLoan) {
-      return res
-        .status(404)
-        .json({ message: `Could not find the loan with ID ${loanID}` });
+      return res.status(404).json({ message: `Issued loan not found`, data: null });
     }
-    res.json(requestedLoan);
+    res.json({ message: "Issued loan fetched successfully", data: requestedLoan });
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: "Internal server error", errorMessage: err.message });
+    res.status(500).json({ message: err.message, data: null });
   }
 };
 
 export const createNewLoanRecord = async (req, res) => {
   try {
-    const { name, term, yearPenaltyRate } = req.body;
-    const newLoanRecord = new IssuedLoan({ name, term, yearPenaltyRate });
+    const { loanName, clientName, amount } = req.body;
+    const newLoanRecord = new IssuedLoan({ loanName, clientName, amount });
     await newLoanRecord.save();
     res.status(201).json({
-      message: `New loan ${name} created successfully`,
-      IssuedLoan: newLoanRecord,
+      message: `New issued loan created successfully`,
+      data: newLoanRecord,
     });
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: "Internal server error", errorMessage: err.message });
+    res.status(500).json({ message: err.message, data: null });
   }
 };
 
@@ -58,15 +50,11 @@ export const editLoanRecord = async (req, res) => {
       }
     );
     if (!updatedLoanRecord) {
-      return res
-        .status(404)
-        .json({ message: `Can not find a loan type with ${LoanRecordID} ID` });
+      return res.status(404).json({ message: `Issued loan not found`, data: null });
     }
-    res.json({ message: "Loan type updated successfully", updatedLoanRecord });
+    res.json({ message: "Issued loan updated successfully", data: updatedLoanRecord });
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: "Internal server error", errorMessage: err.message });
+    res.status(500).json({ message: err.message, data: null });
   }
 };
 
@@ -75,14 +63,10 @@ export const deleteLoanRecord = async (req, res) => {
     const LoanRecordID = req.params.id;
     const deletedLoanRecord = await IssuedLoan.findByIdAndDelete(LoanRecordID);
     if (!deletedLoanRecord) {
-      return res
-        .status(404)
-        .json({ message: `Can not find loan type with ${LoanRecordID} ID` });
+      return res.status(404).json({ message: "Issued loan not found", data: null });
     }
-    res.json({ message: "Deleted sucessfully", deletedLoanRecord });
+    res.json({ message: "Issued loan deleted sucessfully", data: deletedLoanRecord });
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: "Internal server error", errorMessage: err.message });
+    res.status(500).json({ message: err.message, data: null });
   }
 };
